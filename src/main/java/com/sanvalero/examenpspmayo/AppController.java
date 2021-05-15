@@ -63,6 +63,8 @@ public class AppController implements Initializable {
         jobList = FXCollections.observableArrayList();
         list = new ArrayList<>();
 
+        tvData.setItems(jobList);
+
         loadingAllData();
     }
 
@@ -131,7 +133,7 @@ public class AppController implements Initializable {
     public void loadingAllData() {
         jobList.clear();
         list.clear();
-        tvData.setItems(jobList);
+        //tvData.setItems(jobList);
 
         jobService.getAllJobs()
                 .flatMap(Observable::from)
@@ -147,11 +149,9 @@ public class AppController implements Initializable {
     public void jobsByLocation(String location) {
         jobList.clear();
         list.clear();
-        tvData.setItems(jobList);
 
         jobService.getJobsByLocation(location)
                 .flatMap(Observable::from)
-                .filter(job -> job.getLocation().equalsIgnoreCase(location))
                 .doOnCompleted(() -> System.out.println("Listado de trabajos descargado"))
                 .doOnError(throwable -> System.out.println(throwable.getMessage()))
                 .subscribeOn(Schedulers.from(Executors.newCachedThreadPool()))
@@ -159,16 +159,15 @@ public class AppController implements Initializable {
                     jobList.add(job);
                     list.add(job);
                 });
+
     }
 
     public void jobsByLanguage(String language) {
         jobList.clear();
         list.clear();
-        tvData.setItems(jobList);
 
         jobService.getJobsByDescription(language)
                 .flatMap(Observable::from)
-                .filter(job -> job.getDescription().contains(language))
                 .doOnCompleted(() -> System.out.println("Listado de trabajos descargado"))
                 .doOnError(throwable -> System.out.println(throwable.getMessage()))
                 .subscribeOn(Schedulers.from(Executors.newCachedThreadPool()))
@@ -181,7 +180,6 @@ public class AppController implements Initializable {
     public void jobsByType(String type) {
         jobList.clear();
         list.clear();
-        tvData.setItems(jobList);
 
         jobService.getJobsByType(type)
                 .flatMap(Observable::from)

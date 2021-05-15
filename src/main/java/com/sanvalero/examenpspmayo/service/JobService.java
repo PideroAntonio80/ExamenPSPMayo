@@ -34,14 +34,14 @@ public class JobService {
     }
 
     public Observable<List<Job>> getJobsByLocation(String location) {
-        return api.getJobsByDescription(location);
+        return api.getJobsByLocation(location);
     }
 
     public Observable<List<Job>> getJobsByDescription(String description) {
         return api.getJobsByDescription(description);
     }
 
-    public Observable<List<Job>> getJobsByType(String description) {
-        return api.getJobsByDescription(description);
+    public Observable<List<Job>> getJobsByType(String type) {
+        return api.getJobsByType(type);
     }
 }
